@@ -16,6 +16,8 @@ import numpy as np
 # add project directory to python path to enable relative imports
 import os
 import sys
+import math
+
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
@@ -48,8 +50,21 @@ class Sensor:
         # otherwise False.
         ############
 
-        return True
-        
+        # homogeneous coordinates
+        pos_veh = np.ones((4, 1))  
+        pos_veh[0:3] = x[0:3]
+
+        # transform from vehicle to lidar coordinates
+        pos_sens = self.veh_to_sens * pos_veh  
+
+        # compute angle from x value
+        alpha = math.atan2(pos_sens[1], pos_sens[0])
+
+        if pos_sens[0] > 0: 
+            if  alpha > self.fov[0] and alpha<self.fov[1]:
+                return True
+        return False
+
         ############
         # END student code
         ############ 
@@ -57,9 +72,13 @@ class Sensor:
     def get_hx(self, x):    
         # calculate nonlinear measurement expectation value h(x)   
         if self.name == 'lidar':
-            pos_veh = np.ones((4, 1)) # homogeneous coordinates
-            pos_veh[0:3] = x[0:3] 
-            pos_sens = self.veh_to_sens*pos_veh # transform from vehicle to lidar coordinates
+
+            # homogeneous coordinates
+            pos_veh = np.ones((4, 1)) 
+            pos_veh[0:3] = x[0:3]
+
+            # transform from vehicle to lidar coordinates
+            pos_sens = self.veh_to_sens*pos_veh 
             return pos_sens[0:3]
         elif self.name == 'camera':
             
@@ -71,8 +90,21 @@ class Sensor:
             # - return h(x)
             ############
 
-            pass
-        
+            # transform position estimate from vehicle to camera coordinates
+            pos_veh = np.ones((4, 1))  # homogeneous coordinates
+            pos_veh[0:3] = x[0:3]
+            pos_sens = self.veh_to_sens * pos_veh  # transform from vehicle to camera coordinates
+
+            h_x = np.zeros((2,1))
+
+            # check and print error message if dividing by zero
+            if x[0]==0:
+                raise NameError('Jacobian not defined for x[0]=0!')
+            else:
+                h_x[0,0] = self.c_i - self.f_i*x[1]/x[0] # project to image coordinates
+                h_x[1,0] = self.c_j - self.f_j*x[2]/x[0]
+            return h_x 
+
             ############
             # END student code
             ############ 
@@ -115,10 +147,10 @@ class Sensor:
         # TODO Step 4: remove restriction to lidar in order to include camera as well
         ############
         
-        if self.name == 'lidar':
-            meas = Measurement(num_frame, z, self)
-            meas_list.append(meas)
-        return meas_list
+        # if self.name == 'lidar':
+        meas = Measurement(num_frame, z, self)
+        meas_list.append(meas)
+        # return meas_list
         
         ############
         # END student code
@@ -156,8 +188,14 @@ class Measurement:
             # TODO Step 4: initialize camera measurement including z and R 
             ############
 
-            pass
-        
+            self.z = np.zeros((sensor.dim_meas,1)) # measurement vector
+            self.z[0][0] = z[0]
+            self.z[1][0] = z[1]
+            self.sensor = sensor # sensor that generated this measurement
+            sigma_cam_i = params.sigma_cam_i
+            sigma_cam_j = params.sigma_cam_j
+            self.R = np.matrix([[sigma_cam_i**2, 0], # measurement noise covariance matrix
+                                [0, sigma_cam_j**2]])        
             ############
             # END student code
             ############ 
