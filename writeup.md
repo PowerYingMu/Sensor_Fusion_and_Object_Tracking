@@ -34,6 +34,7 @@ The data association is the most challenge part during the implementation. When 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
 
+The 3D LiDAR sensor works well for measuring spatial information and providing accurate distance inforamtion, and it can work in both daytime and nighttime. However, LiDAR can not provide the inforamtion like object color, textture information, etc. The camera is a perfect sensor to obtaion the information like color and texture inforamtion, which is needed for traffic signal recognitions. By combining the 3D LiDAR and camera sensors, we can take the advantages of the both sensors and overcome the weaknesses. The fused information is also more accurate than single sensor detection. 
 
 ### 3. Which challenges will a sensor fusion system face in real-life scenarios? Did you see any of these challenges in the project?
 
