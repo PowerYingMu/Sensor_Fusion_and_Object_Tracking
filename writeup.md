@@ -14,9 +14,15 @@ EKF is implemented and applied to a simple single-target scenario with lidar onl
 ![image](student/Figures_Videos/RMSE_Measurement.png)
 
 ## Step 2: Track Management
-The track management is implemented, which includings initializing and deleting the tracks and setting a track state and a track score for the track object. The track state is initialized with 'initialized' and the score with 1./params.window. The track scores ire decreased for the unassigned tracks. The track is deleted if the score is too low or P is too big. The following plot is the RMSE results.
+The track management is implemented, which includings initializing and deleting the tracks and setting a track state and a track score for the track object. The track state is initialized with 'initialized' and the score with 1./params.window. The track scores ire decreased for the unassigned tracks. The track is deleted if the score is too low or P is too big. After implementing the track management, a new track is initialized automatically where unassigned measurements occur, the true track is confirmed quickly, and the track is deleted after it has vanished from the visible range. The following plot is the RMSE results.
 
 ![image](student/Figures_Videos/RMSE_TrackManagement.png)
+
+## Step 3: Association
+A single nearest neighbor data association is implemented to associate measurements to tracks, which is based on minimizing Mahalanobis distance of detected objects to tracks. Gating is used to check if a measurement falls inside a track's gate. Multiple tracks are updated with multiple measurements. Each measurement is used at most once and each track is updated at most once. The following plot is RMSE results.
+
+![image](student/Figures_Videos/RMSE_Association.png)
+
 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
