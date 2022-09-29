@@ -28,6 +28,9 @@ A nonlinear camera measurement model and a linear lidar model is implemented.A m
 
 ![image](student/Figures_Videos/RMSE_Fusion.png)
 
+![image](student/Figures_Videos/make_tracking_movie.avi)
+
+
 The data association is the most challenge part during the implementation. When there are many measurements and detected objects, the situation can become very complex. 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
