@@ -13,6 +13,10 @@ EKF is implemented and applied to a simple single-target scenario with lidar onl
 ![image](student/Figures_Videos/EKF1.png)
 ![image](student/Figures_Videos/RMSE_Measurement.png)
 
+## Step 2: Track Management
+The track management is implemented, which includings initializing and deleting the tracks and setting a track state and a track score for the track object. The track state is initialized with 'initialized' and the score with 1./params.window. The track scores ire decreased for the unassigned tracks. The track is deleted if the score is too low or P is too big. The following plot is the RMSE results.
+
+![image](student/Figures_Videos/RMSE_TrackManagement.png)
 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
