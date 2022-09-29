@@ -19,7 +19,7 @@ The track management is implemented, which includings initializing and deleting 
 ![image](student/Figures_Videos/RMSE_TrackManagement.png)
 
 ## Step 3: Data Association
-A single nearest neighbor data association is implemented to associate measurements to tracks, which is based on minimizing Mahalanobis distance of detected objects to tracks. Gating is used to check if a measurement falls inside a track's gate. Multiple tracks are updated with multiple measurements. Each measurement is used at most once and each track is updated at most once. The following plot is RMSE results.
+A single nearest neighbor data association is implemented to associate measurements to tracks, which is based on minimizing Mahalanobis distance of detected objects to tracks. Gating is used to check if a measurement falls inside a track's gate. Multiple tracks are updated with multiple measurements. Each measurement is used at most once and each track is updated at most once. The following plot is RMSE results. The 
 
 ![image](student/Figures_Videos/RMSE_Association.png)
 
