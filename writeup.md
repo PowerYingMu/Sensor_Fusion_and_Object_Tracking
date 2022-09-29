@@ -1,8 +1,13 @@
 # Writeup: Track 3D-Objects Over Time
 
-Please use this starter template to answer the following questions:
+This is the final project of sensor fusion and object tracking. There are four main steps: Step 1: Implement an extended Kalman filter. Step 2: Implement track management including track state and track score, track initialization and deletion. Step 3: Implement single nearest neighbour data association and gating. Step 4: Apply sensor fusion by implementing the nonlinear camera measurement model and a sensor visibility check.
+
+RMSE is used to quantify the performance of the object detection and tracking performance. The plots of RMSE and tracking video are in /student/Figures_Videos
 
 ### 1. Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion). Which results did you achieve? Which part of the project was most difficult for you to complete, and why?
+
+
+ 
 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
