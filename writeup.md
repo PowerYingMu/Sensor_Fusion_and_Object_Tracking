@@ -37,6 +37,7 @@ The data association is the most challenge part during the implementation. When 
 The 3D LiDAR sensor works well for measuring spatial information and providing accurate distance inforamtion, and it can work in both daytime and nighttime. However, LiDAR can not provide the inforamtion like object color, textture information, etc. The camera is a perfect sensor to obtaion the information like color and texture inforamtion, which is needed for traffic signal recognitions. By combining the 3D LiDAR and camera sensors, we can take the advantages of the both sensors and overcome the weaknesses. The fused information is also more accurate than single sensor detection. 
 
 ### 3. Which challenges will a sensor fusion system face in real-life scenarios? Did you see any of these challenges in the project?
+As stated in the challenge section, in the real-world scenarios, precisely handle all measurements and tracks will be challenging. Careful selection of the gating thresholld is critical.
 
 
 ### 4. Can you think of ways to improve your tracking results in the future?
