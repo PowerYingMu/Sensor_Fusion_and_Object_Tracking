@@ -8,9 +8,11 @@ RMSE is used to quantify the performance of the object detection and tracking pe
 
 ## Step 1: Extended Kalman Filter
 
-EKF is implemented and applied to a simple single-target scenario with lidar only. The constant velocity model is used to develop the system matrix and process matrix F and process nosie Q. A linear measurement model is used for lidar. A nonlinear measurement model is used for camera.
+EKF is implemented and applied to a simple single-target scenario with lidar only. The constant velocity model is used to develop the system matrix and process matrix F and process nosie Q. A linear measurement model is used for lidar. A nonlinear measurement model is used for camera. The following figures are tracking and RMSE measurement RMSE results. 
 
 ![image](student/Figures_Videos/EKF1.png)
+![image](student/Figures_Videos/RMSE_Measurement.png)
+
 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
