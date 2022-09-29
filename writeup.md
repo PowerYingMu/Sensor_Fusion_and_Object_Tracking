@@ -28,8 +28,7 @@ A nonlinear camera measurement model and a linear lidar model is implemented.A m
 
 ![image](student/Figures_Videos/RMSE_Fusion.png)
 
-![image](student/Figures_Videos/tracking_movie.avi)
-
+https://user-images.githubusercontent.com/13784216/193142571-57a4ccff-5f9e-43b3-8813-389cda636d83.mp4
 
 The data association is the most challenge part during the implementation. When there are many measurements and detected objects, the situation can become very complex. 
 
