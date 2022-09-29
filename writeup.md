@@ -8,7 +8,7 @@ RMSE is used to quantify the performance of the object detection and tracking pe
 
 ## Step 1: Extended Kalman Filter
 
-EKF is implemented and applied to a simple single-target scenario with lidar only. The constant velocity model is used to develop the system matrix and process matrix F and process nosie Q. A linear measurement model is used for lidar. A nonlinear measurement model is used for camera. The following figures are tracking and RMSE measurement RMSE results. 
+EKF is implemented and applied to a simple single-target scenario with lidar only. The constant velocity model is used to develop the system matrix and process matrix F and process nosie Q. EKF is applied to a simple single-target scenario with lidar only. The following figures are tracking and RMSE measurement RMSE results. 
 
 ![image](student/Figures_Videos/EKF1.png)
 ![image](student/Figures_Videos/RMSE_Measurement.png)
@@ -18,10 +18,15 @@ The track management is implemented, which includings initializing and deleting 
 
 ![image](student/Figures_Videos/RMSE_TrackManagement.png)
 
-## Step 3: Association
+## Step 3: Data Association
 A single nearest neighbor data association is implemented to associate measurements to tracks, which is based on minimizing Mahalanobis distance of detected objects to tracks. Gating is used to check if a measurement falls inside a track's gate. Multiple tracks are updated with multiple measurements. Each measurement is used at most once and each track is updated at most once. The following plot is RMSE results.
 
 ![image](student/Figures_Videos/RMSE_Association.png)
+
+## Step 4: Association
+A nonlinear camera measurement model and a linear lidar model is implemented.A method that checks whether an object can be seen by the camera or is outside the field of view is implemented. There are no confirmed ghosts or lost tracks. The following figure is the RMSE results
+
+![image](student/Figures_Videos/RMSE_Fusion.png)
 
 
 
