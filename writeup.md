@@ -6,8 +6,9 @@ RMSE is used to quantify the performance of the object detection and tracking pe
 
 ### 1. Write a short recap of the four tracking steps and what you implemented there (filter, track management, association, camera fusion). Which results did you achieve? Which part of the project was most difficult for you to complete, and why?
 
+## Step 1: Extended Kalman Filter
 
- 
+EKF is implemented and applied to a simple single-target scenario with lidar only. The constant velocity model is used to develop the system matrix and process matrix F and process nosie Q. A linear measurement model is used for lidar. A nonlinear measurement model is used for camera.
 
 
 ### 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
