@@ -39,6 +39,11 @@ The 3D LiDAR sensor works well for measuring spatial information and providing a
 ### 3. Which challenges will a sensor fusion system face in real-life scenarios? Did you see any of these challenges in the project?
 As stated in the challenge section, in the real-world scenarios, precisely handle all measurements and tracks will be challenging. Careful selection of the gating thresholld is critical.
 
+In the real-world, weahter conditions will be another challenges to sensor fusion, like extreme weathers (heaving snow/rain).
+
 
 ### 4. Can you think of ways to improve your tracking results in the future?
+
+1. Use nonlinear motion model
+2. Adding more sensors, like surrounding view cameras, which can be used for 360 fusion to capture all targets near the car.
 
