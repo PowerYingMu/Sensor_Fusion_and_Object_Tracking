@@ -26,17 +26,16 @@ class Track:
     '''Track class with state, covariance, id, score'''
     def __init__(self, meas, id):
         print('creating track no.', id)
-        M_rot = meas.sensor.sens_to_veh[0:3, 0:3] # rotation matrix from sensor to vehicle coordinates
+         # rotation matrix from sensor to vehicle coordinates
         
         ############
         # TODO Step 2: initialization:
         # - replace fixed track initialization values by initialization of x and P based on 
-        # unassigned measurement transformed from sensor to vehicle coordinates
+        # - unassigned measurement transformed from sensor to vehicle coordinates
         # - initialize track state and track score with appropriate values
         ############
         
         # transform measurement to vehicle coordinates
-
         pos_sens = np.ones((4, 1)) # homogeneous coordinates
         pos_sens[0:3] = meas.z[0:3] 
         pos_veh = meas.sensor.sens_to_veh*pos_sens
@@ -44,41 +43,32 @@ class Track:
         # save initial state from measurement
         self.x = np.zeros((6,1))
         self.x[0:3] = pos_veh[0:3]
-        
+
         # set up position estimation error covariance
         M_rot = meas.sensor.sens_to_veh[0:3, 0:3]
         P_pos = M_rot * meas.R * np.transpose(M_rot)
 
-    
-        P_vel = np.matrix([[params.sigma_p44**2, 0, 0],
-                        [0, params.sigma_p55**2, 0],
-                        [0, 0, params.sigma_p66**2]])
+        # set up velocity estimation error covariance
+        sigma_p44 = params.sigma_p44 # initial setting for estimation error covariance P entry for vx
+        sigma_p55 = params.sigma_p55 # initial setting for estimation error covariance P entry for vy
+        sigma_p66 = params.sigma_p66 # initial setting for estimation error covariance P entry for vz
+        P_vel = np.matrix([[sigma_p44**2, 0, 0],
+                        [0, sigma_p55**2, 0],
+                        [0, 0, sigma_p66**2]])
 
         # overall covariance initialization
         self.P = np.zeros((6, 6))
         self.P[0:3, 0:3] = P_pos
         self.P[3:6, 3:6] = P_vel
-        # self.x = np.matrix([[49.53980697],
-        #                 [ 3.41006279],
-        #                 [ 0.91790581],
-        #                 [ 0.        ],
-        #                 [ 0.        ],
-        #                 [ 0.        ]])
-        # self.P = np.matrix([[9.0e-02, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00],
-        #                 [0.0e+00, 9.0e-02, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00],
-        #                 [0.0e+00, 0.0e+00, 6.4e-03, 0.0e+00, 0.0e+00, 0.0e+00],
-        #                 [0.0e+00, 0.0e+00, 0.0e+00, 2.5e+03, 0.0e+00, 0.0e+00],
-        #                 [0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 2.5e+03, 0.0e+00],
-        #                 [0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 0.0e+00, 2.5e+01]])
-
-        # initial track score and 
-        self.state = 'initialized'
-        self.score = 1./params.window
         
+        # initial track score and 
+        self.score=1./params.window
+        self.state='initialized'
+    
         ############
         # END student code
         ############ 
-               
+             
         # other track attributes
         self.id = id
         self.width = meas.width
@@ -125,7 +115,7 @@ class Trackmanagement:
         # feel free to define your own parameters)
         ############
         
-        # decrease score for unassigned tracks
+        # decrease the track score for unassigned tracks
         for i in unassigned_tracks:
             track = self.track_list[i]
             # check visibility    
@@ -134,10 +124,14 @@ class Trackmanagement:
                     # your code goes here
                     track.score-=1./params.window 
 
-        # delete old tracks   
+        # delete old tracks 
         for track in self.track_list:
-            if (track.score <= params.delete_threshold and track.state == 'confirmed') or (track.P[0,0]>params.max_P or track.P[1,1]>params.max_P):
+            if track.state == 'confirmed' and track.score <= params.delete_threshold:
                 self.delete_track(track)
+            if (track.state == 'initialized' or track.state == 'tentative') and (track.P[0, 0] > params.max_P or track.P[1, 1] > params.max_P) :
+                self.delete_track(track)
+           
+
         ############
         # END student code
         ############ 
@@ -166,13 +160,12 @@ class Trackmanagement:
         # - increase track score
         # - set track state to 'tentative' or 'confirmed'
         ############
-
         track.score += 1/params.window
         if track.score >= params.confirmed_threshold:
             track.state = "confirmed"
         else:
             track.state = "tentative"
-                    
+
         ############
         # END student code
         ############ 
